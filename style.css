@@ -38,27 +38,46 @@ body {
   padding: 24px 16px;
 }
 
-/* ================= PROFILE HEADER ================= */
-.profile-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 12px;
+.profile-pic-container {
   position: relative;
-  align-items: center;
+  width: 150px;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .profile-pic {
-  width: 130px;
-  height: 130px;
-  border-radius: 12px;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  background: #eee;
+  transition: opacity 0.3s ease;
 }
+
+.profile-pic.hover {
+  opacity: 0;
+}
+
+.profile-pic-container:hover .hover {
+  opacity: 1;
+}
+
+.profile-pic-container:hover .base {
+  opacity: 0;
+}
+
 
 .profile-content {
   flex: 1;
 }
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 
 
 
@@ -127,63 +146,6 @@ body {
   color: var(--card);
   border: none;
 }
-
-/* Container for the profile image */
-.profile-pic-container {
-  position: relative;
-  width: 180px;
-  height: 150px;
-  border-radius: 12px;
-  cursor: pointer;
-  overflow: hidden; /* keeps images inside the box */
-}
-
-.profile-pic {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* important: show whole image */
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.profile-pic.hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  object-fit: cover; /* also show full image */
-}
-
-.profile-pic-container:hover .hover {
-  opacity: 1;
-}
-
-.profile-pic-container:hover .base {
-  opacity: 0;
-}
-
-.profile-pic {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  transition: opacity 0.3s ease;
-}
-
-.profile-pic.hover {
-  opacity: 0;
-}
-
-.profile-pic-container:hover .hover {
-  opacity: 1;
-}
-
-.profile-pic-container:hover .base {
-  opacity: 0;
-}
-
-
-
-
 
 
 
@@ -996,27 +958,27 @@ body.dark-mode .btn i {
   width: 220px;              /* adjust card width as needed */
 }
 
- /* CHATBOT CONTAINER */
-#chatbot-container {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 360px;
-    height: 600px;
-    background: var(--card); /* uses main theme variable */
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    display: none;
-    flex-direction: column;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    z-index: 10000;
-    overflow: hidden;
-    transition: all 0.3s ease, background 0.4s ease, color 0.4s ease;
+ #chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 360px;
+  height: 600px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 10000;
+  transition: all 0.3s ease, background 0.4s ease;
 }
 
 #chatbot-container.active {
-    display: flex;
+  display: flex;
 }
+
 
 /* HEADER */
 .chat-header {
@@ -1172,37 +1134,370 @@ body.dark-mode .btn i {
     justify-content: space-between;
 }
 
-/* TOGGLE BUTTON */
-.chat-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--text);
-    color: var(--card);
-    padding: 12px 20px;
-    border-radius: 50px;
+
+/* INFO PANEL FIX */
+@media (max-width: 1024px) {
+  .info-panel-container {
+    flex-wrap: wrap;
+  }
+  .info-column {
+    flex: 1 1 calc(50% - 14px);
+  }
+}
+
+@media (max-width: 768px) {
+  .info-column {
+    flex: 1 1 100%;
+  }
+}
+
+/* CHATBOT MOBILE FIX */
+@media (max-width: 480px) {
+  #chatbot-container {
+    width: calc(100% - 24px);
+    height: calc(100% - 120px);
+    right: 12px;
+    bottom: 80px;
+  }
+}
+
+/* PROFILE IMAGE MOBILE FIX */
+@media (max-width: 480px) {
+  .profile-pic-container {
+    width: 120px;
+    height: 120px;
+  }
+  .profile-header {
+    align-items: center;
+    text-align: center;
+  }
+}
+@media (max-width: 768px) {
+  .top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about,
+  .tech-stack,
+  .experience {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .experience {
+    min-height: unset;
+  }
+
+  .box {
+    padding: 16px;
+  }
+}
+
+/* ================= MOBILE PROFILE HEADER – FINAL FIX ================= */
+@media (max-width: 768px) {
+
+  .profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    position: relative;
+    text-align: left; /* ✅ FORCE LEFT */
+  }
+
+  /* PROFILE IMAGE */
+  .profile-pic-container {
+    width: 110px;
+    height: 110px;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  /* TEXT CONTENT */
+  .profile-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* NAME + VERIFIED */
+  .name-section {
     display: flex;
     align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    z-index: 10001;
-    animation: floatingWave 3s ease-in-out infinite;
+    gap: 6px;
+  }
+
+  .name-section h1 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .verify-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* LOCATION */
+  .loc-text {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.3;
+    text-align: left; /* ✅ FIX */
+  }
+
+  /* TITLE */
+  .job-title {
+    font-size: 14.5px; /* ✅ readable */
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  /* BUTTONS */
+  .action-buttons {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .action-buttons .btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  /* THEME TOGGLE */
+  .theme-switch {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    transform: scale(0.9);
+  }
+}
+/* TOGGLE BUTTON */ .chat-toggle { position: fixed; bottom: 20px; right: 20px; background: var(--text); color: var(--card); padding: 12px 20px; border-radius: 50px; display: flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10001; animation: floatingWave 3s ease-in-out infinite; } .chat-toggle svg { width: 20px; height: 20px; animation: iconWiggle 2s infinite; } @keyframes floatingWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } } @keyframes iconWiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
+#chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 360px;
+  height: 600px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 10000;
+  transition: all 0.3s ease, background 0.4s ease;
 }
 
-.chat-toggle svg {
-    width: 20px;
-    height: 20px;
-    animation: iconWiggle 2s infinite;
+#chatbot-container.active {
+  display: flex;
+}
+.chat-header {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
 }
 
-@keyframes floatingWave {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-@keyframes iconWiggle {
-    0%, 100% { transform: rotate(0); }
-    25% { transform: rotate(-15deg); }
-    75% { transform: rotate(15deg); }
+.avatar-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header-text b {
+  font-size: 15px;
+  display: block;
+}
+
+.header-text span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--muted);
+}
+.chat-body {
+  flex: 1;
+  padding: 16px;
+  background: var(--bg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* scrollbar for Chrome */
+.chat-body::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-body::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}
+.message-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 80%;
+  margin-bottom: 16px; /* add spacing between messages */
+}
+
+/* ================= Bot messages on left ================= */
+.message-row.bot {
+  flex-direction: column; /* avatar + name stacked above bubble */
+  align-self: flex-start;
+}
+
+.bot-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px; /* space between name/avatar and bubble */
+}
+
+.bot-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.bot-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.bot-bubble {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px 18px 18px 4px; /* left bubble */
+  color: var(--text);
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 75%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  word-break: break-word;
+}
+
+/* ================= User messages on right ================= */
+.message-row.user {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-self: flex-end;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-bubble {
+  background: var(--text);
+  color: var(--card);
+  border-radius: 18px 18px 4px 18px; /* right bubble */
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 70%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  word-break: break-word;
+}
+
+/* ================= Footer / Input ================= */
+.chat-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--card);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px 12px;
+  background: var(--card);
+}
+
+.input-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: var(--text);
+}
+
+.send-btn {
+  background: var(--text);
+  color: var(--card);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-hint {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+}
+/* ===== SMOOTH FADE + SCALE ON REFRESH ===== */
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+body {
+  animation: fadeScaleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
